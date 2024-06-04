@@ -5,6 +5,7 @@ import axios from 'axios';
 @Injectable()
 export class AppService {
   constructor(private readonly configService: ConfigService) {}
+
   async getTransactionByHash(hash: string): Promise<any> {
     const jsonRpcUrl = this.configService.get('JSON_RPC_URL');
     const data = {
@@ -39,7 +40,6 @@ export class AppService {
     };
     const response: any = await axios.post(jsonRpcUrl, data);
     const editedResponse = response.data.result;
-    console.log(editedResponse);
     const editedData = {
       height,
       hash: editedResponse.hash,
