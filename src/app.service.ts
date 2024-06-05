@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import axios from 'axios';
 
@@ -16,6 +16,9 @@ export class AppService {
     };
     const response: any = await axios.post(jsonRpcUrl, data);
     const editedResponse = response.data.result;
+    if (editedResponse === null || undefined) {
+      throw new NotFoundException('Данной транзакции не найдено');
+    }
     const editedData = {
       hash: editedResponse.blockHash,
       to: editedResponse.to,
@@ -40,6 +43,9 @@ export class AppService {
     };
     const response: any = await axios.post(jsonRpcUrl, data);
     const editedResponse = response.data.result;
+    if (editedResponse === null || undefined) {
+      throw new NotFoundException('Данного блока не найдено');
+    }
     const editedData = {
       height,
       hash: editedResponse.hash,
