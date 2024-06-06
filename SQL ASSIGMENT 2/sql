@@ -45,4 +45,4 @@ select * from test_txs;
 SELECT * FROM test_txs
 WHERE block_height IN (SELECT height FROM test_blocks)
 ORDER BY block_height DESC
-LIMIT $1;
+LIMIT $1 - 1;
